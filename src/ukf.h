@@ -66,8 +66,27 @@ public:
 
   ///* Sigma point spreading parameter
   double lambda_;
+  
+  //create matrix for sigma points in measurement space
+  MatrixXd Zsig;
+  //measurement covariance matrix S
+  MatrixXd S;
+  //mean predicted measurement
+  VectorXd z_pred;
 
-
+  //create augmented mean vector
+  VectorXd x_aug;
+  
+  //create augmented state covariance
+  MatrixXd P_aug;
+  
+  //create sigma point matrix
+  MatrixXd Xsig_aug;
+  
+  //set measurement dimension, radar can measure r, phi, and r_dot
+  int n_z;
+  
+  
   /**
    * Constructor
    */
