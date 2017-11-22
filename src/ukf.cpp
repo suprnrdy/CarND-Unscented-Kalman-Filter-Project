@@ -59,8 +59,9 @@ UKF::UKF() {
   use_radar_ = true;
 
   ///* Weights of sigma points
-  weights_ = VectorXd(2*n_aug_+1);
-
+  weights_.resize(2*n_aug_+1);
+  cout << weights_.size() << endl;
+    
   ///* State dimension
   n_x_ = 5;
 
@@ -71,7 +72,7 @@ UKF::UKF() {
   lambda_ = 3 - n_aug_;
 
   ///* predicted sigma points matrix
-  Xsig_pred_ = MatrixXd(n_x_, 2 * n_x_ + 1);
+  Xsig_pred_ = MatrixXd(n_x_, 2 * n_aug_ + 1);
 
   time_us_ = 0;
 
@@ -219,37 +220,33 @@ void UKF::Prediction(double delta_t) {
     yaw_p = yaw_p + 0.5*nu_yawdd*delta_t*delta_t;
     yawd_p = yawd_p + nu_yawdd*delta_t;
 
-    cout << Xsig_pred_ << endl;
     //write predicted sigma point into right column
     Xsig_pred_(0,i) = px_p;
-    cout << "a" << endl;
     Xsig_pred_(1,i) = py_p;
-    cout << "b" << endl;
     Xsig_pred_(2,i) = v_p;
-    cout << "c" << endl;
     Xsig_pred_(3,i) = yaw_p;
-    cout << "d" << endl;
     Xsig_pred_(4,i) = yawd_p;
-    cout << "5" << endl;
+//    cout << "5" << endl;
   }
-  
-  cout << "predict sigma points" << endl;
 
+    cout << "5.1" << endl;
   // 3. Predict Mean & Covariance 
   // set weights
   double weight_0 = lambda_/(lambda_+n_aug_);
   weights_(0) = weight_0;
-  for (int i=1; is<2*n_aug_+1; i++) {  //2n+1 weights
+    cout << weights_.size() << endl;
+  for (int i=1; i<2*n_aug_+1; i++) {  //2n+1 weights
     double weight = 0.5/(n_aug_+lambda_);
+      cout << i << endl;
     weights_(i) = weight;
   }
-  
+  cout << "6" << endl;
   //predicted state mean
   x_.fill(0.0);
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
     x_ = x_ + weights_(i) * Xsig_pred_.col(i);
   }
-
+  cout << "7" << endl;
   //predicted state covariance matrix
   P_.fill(0.0);
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
