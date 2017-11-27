@@ -25,6 +25,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   //  * the estimation vector size should equal ground truth vector size
   // ... your code here
   if(estimations.size() == 0 || estimations.size() != ground_truth.size()) return rmse;
+  
     
   //accumulate squared residuals
   VectorXd sum(4);
@@ -33,6 +34,8 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
     // ... your code here
     VectorXd mult = (estimations[i] - ground_truth[i]);
     VectorXd sqr = mult.array() * mult.array();
+//    cout << "Estimations: " << endl <<  estimations[i] << endl;
+//    cout << "GT: " << endl << ground_truth[i] << endl;
     sum = sum + sqr;
   }
 
@@ -43,6 +46,8 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   //calculate the squared root
   // ... your code here
   rmse = mean.array().sqrt();
+//
+//  cout << "RMSE:" << endl << rmse << endl;
 
   //return the result
   return rmse;

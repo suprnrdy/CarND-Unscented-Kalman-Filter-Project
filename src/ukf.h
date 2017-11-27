@@ -7,11 +7,16 @@
 #include <string>
 #include <fstream>
 
+using namespace std;
+
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 class UKF {
 public:
+  float NIS_Lidar_;
+  
+  float NIS_radar_;
 
   ///* initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
@@ -86,6 +91,8 @@ public:
   //set measurement dimension, radar can measure r, phi, and r_dot
   int n_z;
   
+  ofstream out_lidar_;
+  ofstream out_radar_;
   
   /**
    * Constructor
